@@ -12,7 +12,7 @@ public class MediaService : IMediaService
         foreach (string filePath in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/Media"))
         {
             Console.WriteLine(filePath);
-            mediaInfos.Add(new MediaInfo { Name = "", PathToFile = filePath });
+            mediaInfos.Add(new MediaInfo { Name = Path.GetFileName(filePath), PathToFile = filePath });
         }
 
         return mediaInfos;

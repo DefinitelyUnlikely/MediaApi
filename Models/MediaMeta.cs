@@ -1,6 +1,6 @@
 namespace MediaApi.Models;
 
-public class MediaMeta
+public class MediaInfo
 {
     public required string Name { get; set; }
     public required string PathToFile { get; set; }

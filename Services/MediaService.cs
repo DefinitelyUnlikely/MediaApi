@@ -11,14 +11,28 @@ public class MediaService : IMediaService
         List<MediaInfo> mediaInfos = [];
         foreach (string filePath in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/Media"))
         {
-            Console.WriteLine(filePath);
             mediaInfos.Add(new MediaInfo { Name = Path.GetFileName(filePath), PathToFile = filePath });
         }
 
         return mediaInfos;
     }
 
-    public async Task<FileStream> StreamMedia(string path)
+    public Task<string> GetPathByid(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<FileStream?> StreamMedia(string path)
+    {
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException("No file at that path");
+        }
+
+        return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+    }
+
+    public Task<FileStream?> StreamMedia(int id)
     {
         throw new NotImplementedException();
     }

@@ -1,11 +1,12 @@
 using MediaApi.Interfaces;
+using MediaApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MediaController(ILogger<MediaController> logger, IMediaService mediaService) : ControllerBase
+public class MediaController(IMediaService mediaService) : ControllerBase
 {
     [HttpGet("/media")]
     public async Task<IActionResult> GetAvailableMediaMeta()
@@ -13,10 +14,16 @@ public class MediaController(ILogger<MediaController> logger, IMediaService medi
         return new OkObjectResult(await mediaService.GetAllMediaInfoAsync());
     }
 
-    [HttpGet("/media/{path}")]
-    public Task<IActionResult> StreamMedia(string path)
+    [HttpGet("/media/{id}")]
+    public async Task<IActionResult> StreamMedia(int id)
     {
-        logger.LogInformation("Streaming Media");
-        throw new NotImplementedException("");
+        var fileStream = await mediaService.StreamMedia(id);
+
+        if (fileStream is null)
+        {
+            return new NotFoundObjectResult("Could not find the media file");
+        }
+
+        return File(fileStream, "video/mp4", enableRangeProcessing: true);
     }
 }

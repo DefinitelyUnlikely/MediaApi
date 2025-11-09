@@ -6,15 +6,22 @@ namespace MediaApi.Services;
 
 public class MediaService : IMediaService
 {
-    public async Task<List<MediaInfo>> GetAllMediaInfoAsync()
+
+    private readonly Dictionary<int, string> mediaPathDict = [];
+    private int counter = 0;
+
+    public async Task<Dictionary<int, string>> GetAllMediaInfoAsync()
     {
-        List<MediaInfo> mediaInfos = [];
+        await UpdateMediaList();
+        return mediaPathDict;
+    }
+
+    public async Task UpdateMediaList()
+    {
         foreach (string filePath in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/Media"))
         {
-            mediaInfos.Add(new MediaInfo { Name = Path.GetFileName(filePath), PathToFile = filePath });
+            if (!mediaPathDict.ContainsValue(filePath)) mediaPathDict.Add(++counter, filePath);
         }
-
-        return mediaInfos;
     }
 
     public Task<string> GetPathByid(int id)
@@ -36,4 +43,6 @@ public class MediaService : IMediaService
     {
         throw new NotImplementedException();
     }
+
+
 }

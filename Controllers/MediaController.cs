@@ -15,9 +15,9 @@ public class MediaController(IMediaService mediaService) : ControllerBase
     }
 
     [HttpGet("/media/{id}")]
-    public async Task<IActionResult> StreamMedia(int id)
+    public IActionResult StreamMedia(int id)
     {
-        var fileStream = await mediaService.StreamMedia(id);
+        var fileStream = mediaService.StreamMedia(id);
 
         if (fileStream is null)
         {

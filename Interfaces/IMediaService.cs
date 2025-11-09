@@ -4,8 +4,8 @@ namespace MediaApi.Interfaces;
 
 public interface IMediaService
 {
-    public Task<Dictionary<int, string>> GetAllMediaInfoAsync();
-    public Task<string> GetPathByid(int id);
-    public Task<FileStream?> StreamMedia(int id);
-    public Task UpdateMediaList();
+    public Dictionary<int, string> GetAllMediaInfoAsync();
+    public string GetPathByid(int id);
+    public FileStream? StreamMedia(int id);
+    public void UpdateMediaList();
 }

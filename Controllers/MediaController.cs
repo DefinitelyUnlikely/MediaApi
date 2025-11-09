@@ -11,12 +11,13 @@ public class MediaController(IMediaService mediaService) : ControllerBase
     [HttpGet("/media")]
     public async Task<IActionResult> GetAvailableMediaMeta()
     {
-        return new OkObjectResult(await mediaService.GetAllMediaInfoAsync());
+        return new OkObjectResult(mediaService.GetAllMediaInfoAsync());
     }
 
     [HttpGet("/media/{id}")]
     public IActionResult StreamMedia(int id)
     {
+        mediaService.UpdateMediaList();
         var fileStream = mediaService.StreamMedia(id);
 
         if (fileStream is null)

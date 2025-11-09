@@ -20,6 +20,8 @@ public class MediaService : IMediaService
     {
         foreach (string filePath in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/Media"))
         {
+            if (filePath[^2..].Equals("md", StringComparison.CurrentCultureIgnoreCase)) { continue; }
+
             if (!mediaPathDict.ContainsValue(filePath)) mediaPathDict.Add(++counter, filePath);
         }
     }
